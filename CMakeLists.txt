@@ -13,7 +13,7 @@ set ( SOURCE_RT
   src/hittable.h
   src/hittable_list.h
   src/interval.h
-# src/material.h
+  src/material.h
   src/ray.h
   src/rt.h
   src/sphere.h
