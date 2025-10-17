@@ -7,11 +7,13 @@ set ( CMAKE_CXX_STANDARD_REQUIRED ON )
 set ( CMAKE_CXX_EXTENSIONS        OFF )
 
 set ( SOURCE_RT
+  src/main.cc
   src/camera.h
   src/color.h
-  src/hittable_list.h
   src/hittable.h
-  src/main.cc
+  src/hittable_list.h
+  src/interval.h
+# src/material.h
   src/ray.h
   src/rt.h
   src/sphere.h

@@ -5,13 +5,6 @@
 
 using color = vec3;
 
-void write_header(std::ostream &out, const int &image_width, const int &image_height)
-{
-    out << "P3\n";
-    out << image_width << ' ' << image_height << '\n';
-    out << "255\n";
-}
-
 void write_color(std::ostream &out, const color &pixel_color)
 {
     auto r = pixel_color.x();
