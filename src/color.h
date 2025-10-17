@@ -3,8 +3,6 @@
 
 #include "vec3.h"
 
-#include <iostream>
-
 using color = vec3;
 
 void write_header(std::ostream &out, const int &image_width, const int &image_height)
@@ -16,7 +14,7 @@ void write_header(std::ostream &out, const int &image_width, const int &image_he
 
 void write_color(std::ostream &out, const color &pixel_color)
 {
-    double r = pixel_color.x();
+    auto r = pixel_color.x();
     double g = pixel_color.y();
     double b = pixel_color.z();
 

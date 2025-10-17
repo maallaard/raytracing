@@ -1,37 +1,15 @@
-#include "color.h"
-#include "ray.h"
-#include "vec3.h"
+#include "rt.h"
 
-#include <iostream>
+#include "hittable.h"
+#include "hittable_list.h"
+#include "sphere.h"
 
-double hit_sphere(const point3 &center, double radius, const ray &r)
+color ray_color(const ray &r, const hittable &world)
 {
-    vec3 oc = center - r.origin();
-
-    double a = r.direction().length_squared();
-    double h = dot(r.direction(), oc);
-    double c = oc.length_squared() - (radius * radius);
-
-    double discriminant = (h * h) - (4 * a * c);
-
-    if (discriminant < 0)
+    hit_record rec;
+    if (world.hit(r, 0, infinity, rec))
     {
-        return -1.0;
-    }
-    else
-    {
-        return (-h - std::sqrt(discriminant)) / a;
-    }
-}
-
-color ray_color(const ray &r)
-{
-    double t = hit_sphere(point3(0, 0, -1), 0.5, r);
-
-    if (t > 0.0)
-    {
-        vec3 N = unit_vector(r.at(t) - vec3(0, 0, -1));
-        return 0.5 * color(N.x() + 1, N.y() + 1, N.z() + 1);
+        return 0.5 * (rec.normal + color(1, 1, 1));
     }
 
     vec3 unit_direction = unit_vector(r.direction());
@@ -58,6 +36,12 @@ int main()
     {
         image_height = 1;
     }
+
+    /* World */
+    hittable_list world;
+
+    world.add(make_shared<sphere>(point3(0, 0, -1), 0.5));
+    world.add(make_shared<sphere>(point3(0, -100.5, -1), 100));
 
     /* Viewport */
 
@@ -104,7 +88,7 @@ int main()
             ray r(viewport_center, ray_direction);
 
             // Set pixel color for current pixel.
-            color pixel_color = ray_color(r);
+            color pixel_color = ray_color(r, world);
 
             // Write pixel RGB bytes to .ppm file.
             write_color(std::cout, pixel_color);
