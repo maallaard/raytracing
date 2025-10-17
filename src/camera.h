@@ -30,6 +30,8 @@ public:
 
         for (int j = 0; j < image_height; j++)
         {
+            std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
+
             for (int i = 0; i < image_width; i++)
             {
                 color pixel_color(0, 0, 0);
@@ -42,6 +44,7 @@ public:
                 write_color(std::cout, pixel_samples_scale * pixel_color);
             }
         }
+
         std::clog << "\rDone.                 \n";
     }
 
@@ -106,8 +109,9 @@ private:
         // sampled point around the pixel location i, j.
 
         vec3 offset = sample_square();
-        vec3 pixel_sample =
-            pixel00_loc + ((i + offset.x()) * pixel_delta_u) + ((j + offset.y()) * pixel_delta_v);
+        vec3 pixel_sample = pixel00_loc +
+                            ((i + offset.x()) * pixel_delta_u) +
+                            ((j + offset.y()) * pixel_delta_v);
 
         point3 ray_origin = (defocus_angle <= 0) ? center : defocus_disk_sample();
         vec3 ray_direction = pixel_sample - ray_origin;

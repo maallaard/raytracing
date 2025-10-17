@@ -52,7 +52,9 @@ public:
     {
         // Return true if the vector is close to zero in all dimensions.
         double s = 1e-8;
-        return (std::fabs(e[0]) < s) && (std::fabs(e[1]) < s) && (std::fabs(e[2]) < s);
+        return (std::fabs(e[0]) < s) &&
+               (std::fabs(e[1]) < s) &&
+               (std::fabs(e[2]) < s);
     }
 
     static vec3 random()
@@ -127,9 +129,12 @@ inline vec3 random_in_unit_disk()
 {
     while (true)
     {
-        auto p = vec3(random_double(-1, 1), random_double(-1, 1), 0);
+        vec3 p = vec3(random_double(-1, 1), random_double(-1, 1), 0);
+
         if (p.length_squared() < 1)
+        {
             return p;
+        }
     }
 }
 
@@ -139,6 +144,7 @@ inline vec3 random_unit_vector()
     {
         vec3 p = vec3::random(-1, 1);
         double lensq = p.length_squared();
+
         if (1e-160 < lensq && lensq <= 1)
         {
             return p / sqrt(lensq);
@@ -151,9 +157,13 @@ inline vec3 random_on_hemisphere(const vec3 &normal)
     vec3 on_unit_sphere = random_unit_vector();
 
     if (dot(on_unit_sphere, normal) > 0.0) // In the same hemisphere as the normal
+    {
         return on_unit_sphere;
+    }
     else
+    {
         return -on_unit_sphere;
+    }
 }
 
 inline vec3 reflect(const vec3 &v, const vec3 &n)

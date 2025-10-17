@@ -17,16 +17,21 @@ public:
         double c = oc.length_squared() - radius * radius;
 
         double discriminant = h * h - a * c;
+
         if (discriminant < 0)
+        {
             return false;
+        }
 
         double sqrtd = std::sqrt(discriminant);
 
         // Find the nearest root that lies in the acceptable range.
         double root = (h - sqrtd) / a;
+
         if (!ray_t.surrounds(root))
         {
             root = (h + sqrtd) / a;
+
             if (!ray_t.surrounds(root))
             {
                 return false;
