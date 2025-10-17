@@ -7,6 +7,7 @@ set ( CMAKE_CXX_STANDARD_REQUIRED ON )
 set ( CMAKE_CXX_EXTENSIONS        OFF )
 
 set ( SOURCE_RT
+  src/camera.h
   src/color.h
   src/hittable_list.h
   src/hittable.h
